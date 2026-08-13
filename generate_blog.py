@@ -2,6 +2,7 @@ import os
 import requests
 import json
 from datetime import datetime
+from bs4 import BeautifulSoup
 
 API_KEY = "AQ.Ab8RN6Kx6fAxzalj8XhOuSu_M185DbYKzYi09ykI4JVtgsh0Pw"
 URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent"
@@ -42,6 +43,32 @@ def generate_article():
     else:
         return f"<p>API Error: {response.text}</p>"
 
+def update_blog_listing(today, title="The Future of Web Development and AI Automation"):
+    blog_page_path = "blog.html"
+    if not os.path.exists(blog_page_path):
+        return
+
+    with open(blog_page_path, "r", encoding="utf-8") as f:
+        soup = BeautifulSoup(f.read(), "html.parser")
+
+    blog_grid = soup.find("div", class_="blog-grid")
+    if blog_grid:
+        new_card = soup.new_tag("article", **{"class": "card"})
+        new_card.string = f"""
+          <div class="card-image"><img src="[https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60](https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60)" alt="AI automation"></div>
+          <div class="card-body">
+            <span class="card-tag">AI Automation</span>
+            <h3>{title}</h3>
+            <p>A fresh, AI-generated exploration into modern development workflows and tools for 2026.</p>
+            <a href="blog/{today}.html" class="card-link">Read More →</a>
+          </div>
+        """
+        # Insert at the beginning of the grid so newest appears first
+        blog_grid.insert(0, new_card)
+
+        with open(blog_page_path, "w", encoding="utf-8") as f:
+            f.write(str(soup))
+
 def save_html_file(content):
     today = datetime.now().strftime("%Y-%m-%d")
     filename = f"blog/{today}.html"
@@ -51,25 +78,30 @@ def save_html_file(content):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unique AI Blog - {today}</title>
-    <link rel="stylesheet" href="style.css">
+    <title>The Future of Web Development and AI Automation in 2026 — CodeWithZaid</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="blog.html">Blog</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
-        </nav>
+    <header class="site-header">
+      <nav class="nav wrap" aria-label="Primary">
+        <a href="../index.html" class="logo"><span class="bracket">&lt;</span>CodeWithZaid<span class="bracket">/&gt;</span></a>
+        <ul class="nav-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../blog.html">Blog</a></li>
+          <li><a href="../about.html">About</a></li>
+          <li><a href="../contact.html">Contact</a></li>
+        </ul>
+      </nav>
     </header>
-    <main>
+    <main class="wrap" style="padding: 40px 20px;">
         <article>
             {content}
         </article>
     </main>
-    <footer>
-        <p>&copy; 2026 CodeWithZaid. All rights reserved.</p>
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <span class="footer-copy">&copy; 2026 CodeWithZaid. All rights reserved.</span>
+      </div>
     </footer>
 </body>
 </html>
@@ -78,7 +110,11 @@ def save_html_file(content):
     os.makedirs("blog", exist_ok=True)
     with open(filename, "w", encoding="utf-8") as f:
         f.write(html_template)
+    
+    # Update the main blog listing page automatically
+    update_blog_listing(today)
 
 if __name__ == "__main__":
     article_html = generate_article()
     save_html_file(article_html)
+    
