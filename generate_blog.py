@@ -2,7 +2,8 @@ import os
 from google import generativeai as genai
 from datetime import datetime
 
-API_KEY = "AQ.Ab8RN6JjWPLb4hgV7UWeQNrCecXpnJstJRtOVOrUmTS8URGYQA"
+# Yahan apni nayi key paste karein
+API_KEY = "AQ.Ab8RN6lwYQPNyZJ_bpF31rpW0h..." 
 genai.configure(api_key=API_KEY)
 
 model = genai.GenerativeModel('gemini-1.5-flash')
@@ -57,3 +58,4 @@ def save_html_file(content):
 if __name__ == "__main__":
     article_html = generate_article()
     save_html_file(article_html)
+    
