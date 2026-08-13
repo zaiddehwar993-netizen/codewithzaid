@@ -2,19 +2,20 @@ import os
 from google import generativeai as genai
 from datetime import datetime
 
-API_KEY = "AizzaSyB0KzFytUr9GkEm8uEbHkEglnak"
+API_KEY = "AQ.Ab8RN6JjWPLb4hgV7UWeQNrCecXpnJstJRtOVOrUmTS8URGYQA"
 genai.configure(api_key=API_KEY)
 
 model = genai.GenerativeModel('gemini-1.5-flash')
-prompt = (
-    "Write a 100% unique, highly engaging, human-like, and completely original blog post about 'The Future of Web Development and AI Automation in 2026'. "
-    "Ensure the content is completely plagiarism-free, creative, and written from a professional developer's perspective. "
-    "Format the output cleanly in clean HTML (use <h2>, <p>, <ul>, <li> tags inside a main article structure) "
-    "So it can be directly published on a website. Do not include markdown code block ticks like ```html in the output, just raw HTML body content."
-)
 
-response = model.generate_content(prompt)
-html_content = response.text
+def generate_article():
+    prompt = (
+        "Write a 100% unique, highly engaging, human-like, and completely original blog post about 'The Future of Web Development and AI Automation in 2026'. "
+        "Ensure the content is completely plagiarism-free, creative, and written from a professional developer's perspective. "
+        "Format the output cleanly in clean HTML (use <h2>, <p>, <ul>, <li> tags inside a main article structure) "
+        "So it can be directly published on a website. Do not include markdown code block ticks like ```html in the output, just raw HTML body content."
+    )
+    response = model.generate_content(prompt)
+    return response.text
 
 def save_html_file(content):
     today = datetime.now().strftime("%Y-%m-%d")
