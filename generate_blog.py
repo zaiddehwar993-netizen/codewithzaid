@@ -24,7 +24,7 @@ def generate_article():
     )
     
     payload = {
-        "model": "google/gemini-2.0-flash-exp:free",
+        "model": "google/gemini-flash-1.5",
         "messages": [
             {
                 "role": "user",
@@ -54,22 +54,25 @@ def update_blog_listing(today, title="The Future of Web Development and AI Autom
 
     blog_grid = soup.find("div", class_="blog-grid")
     if blog_grid:
-        new_card = soup.new_tag("article", **{"class": "card"})
-        
-        card_content = f"""
-          <div class="card-image"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60" alt="AI automation"></div>
-          <div class="card-body">
-            <span class="card-tag">AI Automation</span>
-            <h3>{title}</h3>
-            <p>A fresh, AI-generated exploration into modern development workflows and tools for 2026.</p>
-            <a href="blog/{today}.html" class="card-link">Read More →</a>
-          </div>
-        """
-        new_card.append(BeautifulSoup(card_content, "html.parser"))
-        blog_grid.insert(0, new_card)
+        # Avoid duplicate cards for same day
+        existing_card = blog_grid.find("a", href=f"blog/{today}.html")
+        if not existing_card:
+            new_card = soup.new_tag("article", **{"class": "card"})
+            
+            card_content = f"""
+              <div class="card-image"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60" alt="AI automation"></div>
+              <div class="card-body">
+                <span class="card-tag">AI Automation</span>
+                <h3>{title}</h3>
+                <p>A fresh, AI-generated exploration into modern development workflows and tools for 2026.</p>
+                <a href="blog/{today}.html" class="card-link">Read More →</a>
+              </div>
+            """
+            new_card.append(BeautifulSoup(card_content, "html.parser"))
+            blog_grid.insert(0, new_card)
 
-        with open(blog_page_path, "w", encoding="utf-8") as f:
-            f.write(str(soup))
+            with open(blog_page_path, "w", encoding="utf-8") as f:
+                f.write(str(soup))
 
 def save_html_file(content):
     today = datetime.now().strftime("%Y-%m-%d")
