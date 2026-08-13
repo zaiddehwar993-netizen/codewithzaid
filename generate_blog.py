@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 from bs4 import BeautifulSoup
 
-API_KEY = "AQ.Ab8RN6Kx6fAxzalj8XhOuSu_M185DbYKzYi09ykI4JVtgsh0Pw"
+API_KEY = "AQ.Ab8RN6KL6A_ryqwUnDhXMgIWWMLZwLQaYOLSbHl4ldxFITdeGQ"
 URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent"
 
 def generate_article():
