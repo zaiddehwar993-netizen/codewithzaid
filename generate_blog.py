@@ -4,13 +4,16 @@ import json
 from datetime import datetime
 from bs4 import BeautifulSoup
 
+# OpenRouter API Configuration
 API_KEY = "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"
-URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent"
+URL = "https://openrouter.ai/api/v1/chat/completions"
 
 def generate_article():
     headers = {
         'Content-Type': 'application/json',
-        'X-goog-api-key': API_KEY
+        'Authorization': f'Bearer {API_KEY}',
+        'HTTP-Referer': 'https://codewithzaid.vercel.app/',
+        'X-Title': 'CodeWithZaid'
     }
     
     prompt_text = (
@@ -21,13 +24,11 @@ def generate_article():
     )
     
     payload = {
-        "contents": [
+        "model": "google/gemini-2.0-flash-exp:free",
+        "messages": [
             {
-                "parts": [
-                    {
-                        "text": prompt_text
-                    }
-                ]
+                "role": "user",
+                "content": prompt_text
             }
         ]
     }
@@ -37,7 +38,7 @@ def generate_article():
     if response.status_code == 200:
         res_json = response.json()
         try:
-            return res_json['candidates'][0]['content']['parts'][0]['text']
+            return res_json['choices'][0]['message']['content']
         except (KeyError, IndexError):
             return "<p>Error parsing response content.</p>"
     else:
@@ -56,7 +57,7 @@ def update_blog_listing(today, title="The Future of Web Development and AI Autom
         new_card = soup.new_tag("article", **{"class": "card"})
         
         card_content = f"""
-          <div class="card-image"><img src="[https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60](https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60)" alt="AI automation"></div>
+          <div class="card-image"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60" alt="AI automation"></div>
           <div class="card-body">
             <span class="card-tag">AI Automation</span>
             <h3>{title}</h3>
