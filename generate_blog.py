@@ -54,7 +54,8 @@ def update_blog_listing(today, title="The Future of Web Development and AI Autom
     blog_grid = soup.find("div", class_="blog-grid")
     if blog_grid:
         new_card = soup.new_tag("article", **{"class": "card"})
-        new_card.string = f"""
+        
+        card_content = f"""
           <div class="card-image"><img src="[https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60](https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60)" alt="AI automation"></div>
           <div class="card-body">
             <span class="card-tag">AI Automation</span>
@@ -63,7 +64,7 @@ def update_blog_listing(today, title="The Future of Web Development and AI Autom
             <a href="blog/{today}.html" class="card-link">Read More →</a>
           </div>
         """
-        # Insert at the beginning of the grid so newest appears first
+        new_card.append(BeautifulSoup(card_content, "html.parser"))
         blog_grid.insert(0, new_card)
 
         with open(blog_page_path, "w", encoding="utf-8") as f:
@@ -111,10 +112,8 @@ def save_html_file(content):
     with open(filename, "w", encoding="utf-8") as f:
         f.write(html_template)
     
-    # Update the main blog listing page automatically
     update_blog_listing(today)
 
 if __name__ == "__main__":
     article_html = generate_article()
     save_html_file(article_html)
-    
