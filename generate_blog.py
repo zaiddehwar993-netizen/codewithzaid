@@ -3,7 +3,22 @@ from google import generativeai as genai
 from datetime import datetime
 
 # Yahan apni nayi key paste karein
-API_KEY = "AQ.Ab8RN6lwYQPNyZJ_bpF31rpW0h..." 
+API_KEY = "AIzaSyBm7Kqg07JSp7tmjI7S-gKCsbOCOPYrOC4"
+‎
+‎AIzaSyD5vFK8psxnoUNVDsuyfKUpeHU9X9ep3qQ
+‎
+‎
+‎AIzaSyDFY8tGUn2s-RXEwytATJKjpE_cvqjk6Zc
+‎
+‎AIzaSyDqra9sDEHVSQJGa1R7IO2KnOKMLNr1EIA
+‎
+‎AIzaSyB0bTzkFYf0g6FnmMURLEgob8khEwginak
+‎
+‎
+‎my key 
+‎
+‎AIzaSyB-qMcpEe0fbauAHknHonveDmAqGEyV0_M
+‎ 
 genai.configure(api_key=API_KEY)
 
 model = genai.GenerativeModel('gemini-1.5-flash')
