@@ -1,6 +1,7 @@
 import os
 import requests
 import json
+import urllib.parse
 from datetime import datetime
 from bs4 import BeautifulSoup
 
@@ -21,7 +22,7 @@ def generate_article():
     )
     
     payload = {
-        "model": "meta-llama/llama-3-8b-instruct:free",
+        "model": "meta-llama/llama-3.1-8b-instruct",
         "messages": [
             {
                 "role": "user",
@@ -57,8 +58,12 @@ def update_blog_listing(today, title="The Future of Web Development and AI Autom
         if not existing_card:
             new_card = soup.new_tag("article", **{"class": "card"})
             
+            # Dynamic Image generator based on topic title
+            encoded_title = urllib.parse.quote(title)
+            dynamic_img_url = f"https://source.unsplash.com/featured/500x300/?{encoded_title},tech,coding"
+            
             card_content = f"""
-              <div class="card-image"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60" alt="AI automation"></div>
+              <div class="card-image"><img src="{dynamic_img_url}" alt="{title}"></div>
               <div class="card-body">
                 <span class="card-tag">AI Automation</span>
                 <h3>{title}</h3>
@@ -119,4 +124,3 @@ def save_html_file(content):
 if __name__ == "__main__":
     article_html = generate_article()
     save_html_file(article_html)
-    
