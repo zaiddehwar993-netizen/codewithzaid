@@ -24,7 +24,7 @@ def generate_article():
     )
     
     payload = {
-        "model": "google/gemini-flash-1.5",
+        "model": "meta-llama/llama-3-8b-instruct:free",
         "messages": [
             {
                 "role": "user",
@@ -54,13 +54,12 @@ def update_blog_listing(today, title="The Future of Web Development and AI Autom
 
     blog_grid = soup.find("div", class_="blog-grid")
     if blog_grid:
-        # Avoid duplicate cards for same day
         existing_card = blog_grid.find("a", href=f"blog/{today}.html")
         if not existing_card:
             new_card = soup.new_tag("article", **{"class": "card"})
             
             card_content = f"""
-              <div class="card-image"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60" alt="AI automation"></div>
+              <div class="card-image"><img src="[https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60](https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60)" alt="AI automation"></div>
               <div class="card-body">
                 <span class="card-tag">AI Automation</span>
                 <h3>{title}</h3>
@@ -121,3 +120,4 @@ def save_html_file(content):
 if __name__ == "__main__":
     article_html = generate_article()
     save_html_file(article_html)
+    
