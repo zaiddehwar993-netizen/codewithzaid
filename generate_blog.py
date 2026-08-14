@@ -4,7 +4,6 @@ import json
 from datetime import datetime
 from bs4 import BeautifulSoup
 
-# OpenRouter API Configuration
 API_KEY = "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"
 URL = "https://openrouter.ai/api/v1/chat/completions"
 
@@ -17,10 +16,8 @@ def generate_article():
     }
     
     prompt_text = (
-        "Write a 100% unique, highly engaging, human-like, and completely original blog post about 'The Future of Web Development and AI Automation in 2026'. "
-        "Ensure the content is completely plagiarism-free, creative, and written from a professional developer's perspective. "
-        "Format the output cleanly in clean HTML (use <h2>, <p>, <ul>, <li> tags inside a main article structure) "
-        "So it can be directly published on a website. Do not include markdown code block ticks like ```html in the output, just raw HTML body content."
+        "Write a unique, professional blog post about 'The Future of Web Development and AI Automation in 2026'. "
+        "Provide the output strictly as clean HTML using only <h2> and <p> tags. Do not write raw code block markers or markdown ticks."
     )
     
     payload = {
@@ -38,7 +35,10 @@ def generate_article():
     if response.status_code == 200:
         res_json = response.json()
         try:
-            return res_json['choices'][0]['message']['content']
+            content = res_json['choices'][0]['message']['content']
+            # Clean up if markdown ticks accidentally returned
+            content = content.replace("```html", "").replace("```", "")
+            return content
         except (KeyError, IndexError):
             return "<p>Error parsing response content.</p>"
     else:
@@ -59,11 +59,11 @@ def update_blog_listing(today, title="The Future of Web Development and AI Autom
             new_card = soup.new_tag("article", **{"class": "card"})
             
             card_content = f"""
-              <div class="card-image"><img src="[https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60](https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60)" alt="AI automation"></div>
+              <div class="card-image"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=500&q=60" alt="AI automation"></div>
               <div class="card-body">
                 <span class="card-tag">AI Automation</span>
                 <h3>{title}</h3>
-                <p>A fresh, AI-generated exploration into modern development workflows and tools for 2026.</p>
+                <p>A fresh exploration into modern development workflows for 2026.</p>
                 <a href="blog/{today}.html" class="card-link">Read More →</a>
               </div>
             """
@@ -75,6 +75,7 @@ def update_blog_listing(today, title="The Future of Web Development and AI Autom
 
 def save_html_file(content):
     today = datetime.now().strftime("%Y-%m-%d")
+    os.makedirs("blog", exist_ok=True)
     filename = f"blog/{today}.html"
 
     html_template = f"""<!DOCTYPE html>
@@ -98,7 +99,7 @@ def save_html_file(content):
       </nav>
     </header>
     <main class="wrap" style="padding: 40px 20px;">
-        <article>
+        <article class="blog-post-content">
             {content}
         </article>
     </main>
@@ -111,7 +112,6 @@ def save_html_file(content):
 </html>
 """
 
-    os.makedirs("blog", exist_ok=True)
     with open(filename, "w", encoding="utf-8") as f:
         f.write(html_template)
     
