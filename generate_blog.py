@@ -89,6 +89,8 @@ def save_html_file(content):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Future of Web Development and AI Automation in 2026 — CodeWithZaid</title>
     <link rel="stylesheet" href="../style.css">
+             <script defer src="/_vercel/insights/script.js"></script>
+
 </head>
 <body>
     <header class="site-header">
