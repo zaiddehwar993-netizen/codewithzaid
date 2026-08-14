@@ -36,7 +36,6 @@ def generate_article():
         res_json = response.json()
         try:
             content = res_json['choices'][0]['message']['content']
-            # Clean up if markdown ticks accidentally returned
             content = content.replace("```html", "").replace("```", "")
             return content
         except (KeyError, IndexError):
