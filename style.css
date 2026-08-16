@@ -1,5 +1,5 @@
 /* =========================================================
-   CodeWithZaid.online — Complete CSS (Index & Blog Synced)
+   CodeWithZaid.online — Complete CSS (Index, Blog & Contact Synced)
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap');
@@ -379,7 +379,180 @@ footer a:hover img, footer a:hover svg, .social-links a:hover img, .social-links
   transform: scale(0.96) !important;
 }
 
-/* ---------- 6. Responsive Fixes ---------- */
+/* ---------- 6. Contact Page Modern Styling & Animations ---------- */
+.page-header h1 {
+  background: linear-gradient(90deg, #ffffff 0%, #00f0ff 50%, #ffffff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: contactTitleGlow 3.5s linear infinite;
+  display: inline-block;
+}
+
+@keyframes contactTitleGlow {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  margin-top: 10px;
+}
+
+@media (min-width: 820px) {
+  .contact-grid {
+    grid-template-columns: 1fr 1.25fr;
+    gap: 48px;
+  }
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-info h3 {
+  font-size: 1.15rem;
+  color: var(--text);
+  margin-top: 6px;
+}
+
+/* Email Box Glowing Styling */
+.email-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: rgba(0, 240, 255, 0.06);
+  border: 1px solid var(--accent-2);
+  border-radius: var(--radius);
+  color: var(--accent-2) !important;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 0.98rem;
+  text-decoration: none;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+  transition: transform 0.25s var(--easing), box-shadow 0.25s var(--easing), background 0.25s var(--easing);
+  width: fit-content;
+}
+
+.email-link:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: rgba(0, 240, 255, 0.12);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.45);
+  color: #ffffff !important;
+}
+
+/* Form Container */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--bg-elevated);
+  padding: 32px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s var(--easing);
+}
+
+.contact-form:focus-within {
+  border-color: rgba(0, 240, 255, 0.35);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  font-family: var(--font-display);
+}
+
+/* Inputs & Textarea Styling */
+.form-control,
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg-elevated-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.25s var(--easing), box-shadow 0.25s var(--easing), transform 0.25s var(--easing);
+  box-sizing: border-box;
+}
+
+.form-control:focus,
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form textarea:focus {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.contact-form textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+/* Send Message Button Animation */
+.btn-cyan,
+.contact-form button[type="submit"] {
+  width: 100%;
+  padding: 14px 24px;
+  background: var(--accent-2) !important;
+  color: #000000 !important;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.3);
+  transition: transform 0.25s var(--easing), box-shadow 0.25s var(--easing), background 0.25s var(--easing);
+  margin-top: 6px;
+}
+
+.btn-cyan:hover,
+.contact-form button[type="submit"]:hover {
+  background: #ffffff !important;
+  box-shadow: 0 0 24px rgba(0, 240, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.btn-cyan:active,
+.contact-form button[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+.form-note, .form-success {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.form-success {
+  display: none;
+  color: #10b981;
+  font-weight: 500;
+}
+
+/* ---------- 7. Responsive Fixes ---------- */
 @media (max-width: 720px) {
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
-}
+   }
