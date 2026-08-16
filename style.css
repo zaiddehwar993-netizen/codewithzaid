@@ -1,5 +1,5 @@
 /* =========================================================
-   CodeWithZaid.online — Clean High-End Developer Layout
+   CodeWithZaid.online — Complete Modern CSS
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap');
@@ -8,13 +8,13 @@
   --bg: #090a0f;
   --bg-elevated: #12141d;
   --bg-elevated-2: #161922;
-  --border: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.09);
   --border-glow: rgba(0, 240, 255, 0.4);
   --text: #f0f2f8;
   --text-muted: #8e93a6;
   --accent: #2563eb;
   --accent-2: #00f0ff;
-  --accent-glow: rgba(0, 240, 255, 0.2);
+  --accent-glow: rgba(0, 240, 255, 0.25);
   --accent-soft: rgba(37, 99, 235, 0.15);
   --hero-gradient: linear-gradient(135deg, #ffffff 30%, var(--accent-2));
   --badge-bg: rgba(0, 240, 255, 0.08);
@@ -44,6 +44,7 @@
   --badge-border: rgba(2, 132, 199, 0.25);
 }
 
+/* Global Reset & Tap Highlight Fix */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -61,8 +62,8 @@ body {
   color: var(--text);
   font-family: var(--font-body);
   line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 img {
@@ -92,7 +93,7 @@ h1, h2, h3, h4 {
   color: var(--text);
 }
 
-/* ---------- Header & Mobile Menu Fix ---------- */
+/* ---------- 1. Header & Solid Mobile Overlay ---------- */
 .site-header {
   position: fixed;
   top: 0;
@@ -157,7 +158,6 @@ h1, h2, h3, h4 {
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-/* MOBILE NAV OVERLAY SOLID FIX */
 @media (max-width: 720px) {
   .hamburger { display: flex; }
   
@@ -167,7 +167,7 @@ h1, h2, h3, h4 {
     left: 0;
     width: 100vw;
     height: calc(100vh - 72px);
-    background-color: var(--bg) !important; /* Solid background prevents text overlap */
+    background-color: var(--bg) !important;
     z-index: 999;
     flex-direction: column;
     align-items: flex-start;
@@ -191,32 +191,84 @@ h1, h2, h3, h4 {
   }
 }
 
-/* ---------- Hero & Page Spacing Fix ---------- */
+/* ---------- 2. Social Media & Footer Icons Fix ---------- */
+.social-links, .footer-socials, .social-icon-box {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+}
+
+.social-links img, 
+.social-links svg,
+.footer-socials img, 
+.footer-socials svg,
+.social-icon-box img,
+.social-icon-box svg {
+  width: 24px !important;
+  height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
+  object-fit: contain !important;
+  display: inline-block !important;
+  transition: transform 0.2s var(--easing), filter 0.2s ease;
+}
+
+.social-links a:hover img,
+.social-links a:hover svg,
+.footer-socials a:hover img,
+.footer-socials a:hover svg {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 0 6px var(--accent-2));
+}
+
+/* ---------- 3. Futuristic AI Title Glow Animation ---------- */
+.ai-title-glow, .card-body h3, .hero h1 .accent-text {
+  display: inline-block;
+  background: linear-gradient(90deg, #ffffff 0%, var(--accent-2) 50%, #ffffff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: aiPulseGlow 4s linear infinite;
+}
+
+@keyframes aiPulseGlow {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+.ai-badge-header {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ai-badge-header::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--accent-2);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent-2);
+  animation: aiBlink 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes aiBlink {
+  0% { opacity: 0.3; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ---------- 4. Layout & Cards ---------- */
 .hero {
   padding: 160px 0 80px;
 }
+
 .page-header {
   padding-top: 140px !important;
   padding-bottom: 30px;
 }
-.hero h1 {
-  font-size: clamp(2.4rem, 5.5vw, 3.8rem);
-  margin-bottom: 24px;
-}
-.hero h1 .accent-text {
-  background: var(--hero-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.hero p {
-  color: var(--text-muted);
-  font-size: 1.15rem;
-  max-width: 580px;
-  margin-bottom: 40px;
-}
 
-/* ---------- Ultra-Smooth Article Cards & Read More Button ---------- */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -275,11 +327,6 @@ h1, h2, h3, h4 {
 
 .card-body h3 {
   font-size: 1.18rem;
-  transition: color 0.2s var(--easing);
-}
-
-.card:hover .card-body h3 {
-  color: var(--accent-2);
 }
 
 .card-body p {
@@ -288,7 +335,7 @@ h1, h2, h3, h4 {
   flex: 1;
 }
 
-/* High-Level Smooth Action Button */
+/* ---------- 5. Smooth See More / Read More Button ---------- */
 .card-action {
   margin-top: 14px;
   padding-top: 14px;
@@ -305,33 +352,32 @@ h1, h2, h3, h4 {
   color: var(--accent-2);
   padding: 8px 16px;
   border-radius: 8px;
-  background: var(--accent-soft);
-  transition: background 0.2s var(--easing), color 0.2s var(--easing), transform 0.2s var(--easing);
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  transition: all 0.3s var(--easing);
+  cursor: pointer;
 }
 
-.card:hover .read-btn {
+.read-btn:hover {
   background: var(--accent-2);
   color: #000000;
-  transform: translateX(4px);
+  box-shadow: 0 0 12px var(--accent-glow);
+  transform: translateY(-1px);
 }
 
-/* ---------- About Page Image Fix ---------- */
-.about-grid {
+.read-btn:active {
+  transform: scale(0.96);
+  opacity: 0.8; /* Subtle tactile load response */
+}
+
+/* ---------- 6. About Avatar Fix ---------- */
+.about-grid, .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
   margin-top: 20px;
 }
 
-.avatar-box {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 28px;
-  text-align: center;
-}
-
-/* Normal Clean Size Profile Picture Fix */
 .avatar-box img, .avatar-box .avatar-img {
   width: 120px !important;
   height: 120px !important;
@@ -342,30 +388,8 @@ h1, h2, h3, h4 {
   box-shadow: 0 0 16px var(--accent-glow);
 }
 
-/* ---------- Contact Page Fix ---------- */
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  margin-top: 20px;
-}
-
-.form-group {
-  margin-bottom: 18px;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  background: var(--bg-elevated-2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 12px 14px;
-  color: var(--text);
-  font-family: var(--font-body);
-}
-
-/* ---------- Mobile Responsive Grid ---------- */
+/* ---------- 7. Responsive Fixes ---------- */
 @media (max-width: 720px) {
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
 }
+
