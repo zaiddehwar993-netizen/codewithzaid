@@ -9,6 +9,68 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link href="style.css" rel="stylesheet"/>
   <script defer src="/_vercel/insights/script.js"></script>
+
+  <style>
+    /* Ultra-Smooth High-Level Search Bar Styling */
+    .blog-search-wrapper {
+      margin-top: 30px;
+      max-width: 600px;
+      position: relative;
+    }
+
+    .search-input-box {
+      width: 100%;
+      padding: 14px 20px 14px 48px;
+      background: var(--bg-elevated, #12141d);
+      border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+      border-radius: 12px;
+      color: var(--text, #fff);
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      outline: none;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .search-input-box:focus {
+      border-color: #00f0ff;
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: var(--text-muted, #8e93a6);
+      pointer-events: none;
+      transition: color 0.25s ease;
+    }
+
+    .search-input-box:focus + .search-icon {
+      color: #00f0ff;
+    }
+
+    /* Smooth transition for card filtering */
+    .card-grid .card {
+      transition: opacity 0.3s ease, transform 0.3s ease, display 0.3s ease;
+    }
+
+    .card.hide-card {
+      display: none !important;
+    }
+
+    .no-results-msg {
+      display: none;
+      margin-top: 40px;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
 
@@ -37,58 +99,71 @@
     <div class="eyebrow">all articles</div>
     <h1>Guides, Tutorials &amp; <span class="ai-title-glow">AI Workflows</span></h1>
     <p>Everything here is written after real, hands-on testing.</p>
+
+    <!-- High-Level Search Bar -->
+    <div class="blog-search-wrapper">
+      <input type="text" id="blogSearchInput" class="search-input-box" placeholder="Search guides, AI tools, or keywords..." autocomplete="off">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>
+    </div>
   </section>
 
-  <div class="card-grid" style="margin-top: 40px;">
+  <div class="card-grid" id="blogCardGrid" style="margin-top: 40px;">
 
+    <!-- Article 1 -->
     <article class="card">
       <div class="card-img-wrapper">
-        <img alt="The Future of Web Development and AI Automation" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&amp;fit=crop&amp;w=600&amp;q=60"/>
+        <img alt="Building Autonomous AI Agents for Outreach" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&amp;fit=crop&amp;w=600&amp;q=60"/>
       </div>
       <div class="card-topic-box">
-        <span class="topic-title">AI Automation</span>
+        <span class="topic-title">AI Agents</span>
       </div>
       <div class="card-body">
-        <h3>The Future of Web Development and AI Automation</h3>
-        <p>A fresh exploration into modern development workflows for 2026.</p>
+        <h3>Building Autonomous AI Outreach Agents in 2026</h3>
+        <p>Learn how to connect custom AI LLMs with automated messaging pipelines for real client outreach.</p>
         <div class="card-action">
           <a class="read-btn" href="blog/2026-08-16.html">Read More →</a>
         </div>
       </div>
     </article>
 
+    <!-- Article 2 -->
     <article class="card">
       <div class="card-img-wrapper">
-        <img alt="The Future of Web Development and AI Automation" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&amp;fit=crop&amp;w=600&amp;q=60"/>
+        <img alt="Automated Web Scraping and Map Lead Extraction" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&amp;fit=crop&amp;w=600&amp;q=60"/>
       </div>
       <div class="card-topic-box">
-        <span class="topic-title">AI Automation</span>
+        <span class="topic-title">Web Scraping</span>
       </div>
       <div class="card-body">
-        <h3>The Future of Web Development and AI Automation</h3>
-        <p>A fresh exploration into modern development workflows for 2026.</p>
+        <h3>Automated Map Data Extraction for Business Leads</h3>
+        <p>A deep dive into automated scrapers that extract local business contact info with high accuracy.</p>
         <div class="card-action">
           <a class="read-btn" href="blog/2026-08-15.html">Read More →</a>
         </div>
       </div>
     </article>
 
+    <!-- Article 3 -->
     <article class="card">
       <div class="card-img-wrapper">
-        <img alt="AI automation" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&amp;fit=crop&amp;w=600&amp;q=60"/>
+        <img alt="Modern Web Development Workflows" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&amp;fit=crop&amp;w=600&amp;q=60"/>
       </div>
       <div class="card-topic-box">
-        <span class="topic-title">AI Automation</span>
+        <span class="topic-title">Workflow Automation</span>
       </div>
       <div class="card-body">
-        <h3>The Future of Web Development and AI Automation</h3>
-        <p>A fresh exploration into modern development workflows for 2026.</p>
+        <h3>Modern Web Development &amp; GitHub Automated Deployments</h3>
+        <p>Streamlining code execution, Vercel deployments, and dynamic site generator scripts.</p>
         <div class="card-action">
           <a class="read-btn" href="blog/2026-08-14.html">Read More →</a>
         </div>
       </div>
     </article>
 
+  </div>
+
+  <div id="noResultsMsg" class="no-results-msg">
+    No matching articles found. Try searching for something else!
   </div>
 </main>
 
@@ -113,5 +188,41 @@
 </footer>
 
 <script src="script.js"></script>
+
+<!-- High-Speed Live Search Filter Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("blogSearchInput");
+    const cards = document.querySelectorAll("#blogCardGrid .card");
+    const noResultsMsg = document.getElementById("noResultsMsg");
+
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+          const title = card.querySelector("h3") ? card.querySelector("h3").innerText.toLowerCase() : "";
+          const desc = card.querySelector("p") ? card.querySelector("p").innerText.toLowerCase() : "";
+          const topic = card.querySelector(".topic-title") ? card.querySelector(".topic-title").innerText.toLowerCase() : "";
+
+          if (title.includes(query) || desc.includes(query) || topic.includes(query)) {
+            card.classList.remove("hide-card");
+            visibleCount++;
+          } else {
+            card.classList.add("hide-card");
+          }
+        });
+
+        if (visibleCount === 0) {
+          noResultsMsg.style.display = "block";
+        } else {
+          noResultsMsg.style.display = "none";
+        }
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
