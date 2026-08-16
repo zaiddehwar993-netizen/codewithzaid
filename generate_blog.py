@@ -9,7 +9,6 @@ from bs4 import BeautifulSoup
 API_KEY = "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"
 URL = "https://openrouter.ai/api/v1/chat/completions"
 
-# Array of topics to keep generated titles dynamic & unique every day
 TOPICS = [
     "Autonomous AI Agents in Modern Web Development",
     "Automated Web Scraping and Lead Extraction Pipelines",
@@ -29,10 +28,14 @@ def generate_article():
     
     selected_topic = random.choice(TOPICS)
     
+    # Strictly instructed prompt for clear Titles, Subtitles & Paragraph Spacing
     prompt_text = (
-        f"Write a unique, highly professional blog post about '{selected_topic}'. "
-        "Provide the output strictly as clean HTML using an <h1> for the article title, followed by <h2> subheadings and <p> content paragraphs. "
-        "Do not write raw code block markers, markdown ticks, or html backticks."
+        f"Write an engaging, professional article about '{selected_topic}'. "
+        "Strictly structure the output in clean HTML: "
+        "1. Start with a single <h1> main title. "
+        "2. Break the content into clear logical sections with descriptive <h2> subheadings (subtitles). "
+        "3. Write detailed, well-spaced <p> paragraphs under each section. "
+        "Do not write raw code block markers, markdown ticks, or markdown hashes."
     )
     
     payload = {
@@ -102,12 +105,11 @@ def save_html_file(content, topic_title):
     os.makedirs("blog", exist_ok=True)
     filename = f"blog/{today}.html"
 
-    # Extract dynamic h1 title if generated inside AI content
     extracted_title = topic_title
     if "<h1>" in content and "</h1>" in content:
         try:
             extracted_title = content.split("<h1>")[1].split("</h1>")[0]
-        except IndexingError:
+        except Exception:
             pass
 
     html_template = f"""<!DOCTYPE html>
@@ -119,7 +121,7 @@ def save_html_file(content, topic_title):
     <link rel="stylesheet" href="../style.css">
     <script defer src="/_vercel/insights/script.js"></script>
     <style>
-        /* Smooth vertical scrolling and reading layout for laptop/desktop */
+        /* Article Reading & Spacing Enhancements */
         html, body {{
             overflow-x: hidden;
             overflow-y: auto !important;
@@ -127,28 +129,31 @@ def save_html_file(content, topic_title):
             min-height: 100vh;
         }}
         .blog-post-article {{
-            max-width: 800px;
+            max-width: 820px;
             margin: 0 auto;
             padding: 40px 20px 80px;
-            line-height: 1.8;
         }}
         .blog-post-article h1 {{
-            font-size: 2.2rem;
-            margin-bottom: 24px;
+            font-size: 2.3rem;
+            line-height: 1.3;
+            margin-bottom: 28px;
             background: linear-gradient(90deg, #ffffff 0%, #00f0ff 50%, #ffffff 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }}
         .blog-post-article h2 {{
-            font-size: 1.5rem;
-            margin-top: 32px;
-            margin-bottom: 16px;
+            font-size: 1.55rem;
+            margin-top: 36px;
+            margin-bottom: 18px;
             color: var(--accent-2, #00f0ff);
+            border-left: 3px solid #00f0ff;
+            padding-left: 12px;
         }}
         .blog-post-article p {{
-            font-size: 1.05rem;
-            margin-bottom: 20px;
+            font-size: 1.08rem;
+            line-height: 1.8;
+            margin-bottom: 24px !important; /* Proper space before next paragraph */
             color: var(--text-muted, #c3c7d5);
         }}
     </style>
@@ -189,3 +194,4 @@ def save_html_file(content, topic_title):
 if __name__ == "__main__":
     article_html, topic = generate_article()
     save_html_file(article_html, topic)
+            
