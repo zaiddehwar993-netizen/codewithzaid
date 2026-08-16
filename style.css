@@ -1,5 +1,5 @@
 /* =========================================================
-   CodeWithZaid.online — Complete Modern CSS
+   CodeWithZaid.online — Complete Modern CSS Layout
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap');
@@ -191,37 +191,45 @@ h1, h2, h3, h4 {
   }
 }
 
-/* ---------- 2. Social Media & Footer Icons Fix ---------- */
-.social-links, .footer-socials, .social-icon-box {
-  display: flex !important;
-  align-items: center !important;
-  gap: 16px !important;
-}
-
-.social-links img, 
+/* ---------- 2. STRICT FIX: GitHub & LinkedIn Icon Sizing ---------- */
+footer img, 
+footer svg, 
+.site-footer img, 
+.site-footer svg,
+.social-links img,
 .social-links svg,
-.footer-socials img, 
+.footer-socials img,
 .footer-socials svg,
-.social-icon-box img,
-.social-icon-box svg {
+a[href*="github"] img,
+a[href*="github"] svg,
+a[href*="linkedin"] img,
+a[href*="linkedin"] svg {
   width: 24px !important;
   height: 24px !important;
   max-width: 24px !important;
   max-height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
   object-fit: contain !important;
   display: inline-block !important;
+  margin: 0 6px !important;
   transition: transform 0.2s var(--easing), filter 0.2s ease;
 }
 
-.social-links a:hover img,
-.social-links a:hover svg,
-.footer-socials a:hover img,
-.footer-socials a:hover svg {
+footer a, .site-footer a, .social-links a, .footer-socials a, a[href*="github"], a[href*="linkedin"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+footer a:hover img, footer a:hover svg, .social-links a:hover img, .social-links a:hover svg {
   transform: translateY(-2px);
   filter: drop-shadow(0 0 6px var(--accent-2));
 }
 
-/* ---------- 3. Futuristic AI Title Glow Animation ---------- */
+/* ---------- 3. AI Glow Title Animation ---------- */
 .ai-title-glow, .card-body h3, .hero h1 .accent-text {
   display: inline-block;
   background: linear-gradient(90deg, #ffffff 0%, var(--accent-2) 50%, #ffffff 100%);
@@ -367,7 +375,7 @@ h1, h2, h3, h4 {
 
 .read-btn:active {
   transform: scale(0.96);
-  opacity: 0.8; /* Subtle tactile load response */
+  opacity: 0.8;
 }
 
 /* ---------- 6. About Avatar Fix ---------- */
@@ -392,4 +400,3 @@ h1, h2, h3, h4 {
 @media (max-width: 720px) {
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
 }
-
