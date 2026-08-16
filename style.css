@@ -93,7 +93,7 @@ h1, h2, h3, h4 {
   color: var(--text);
 }
 
-/* ---------- 1. Header & Solid Mobile Overlay ---------- */
+/* ---------- 1. Header, Logo Animations & Mobile Overlay ---------- */
 .site-header {
   position: fixed;
   top: 0;
@@ -111,16 +111,62 @@ h1, h2, h3, h4 {
   height: 72px;
 }
 
+/* Header Logo Glow & Pulse Animation */
 .logo {
   font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 1.1rem;
+  font-weight: 700;
+  font-size: 1.15rem;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  color: var(--text);
+  gap: 2px;
+  position: relative;
+  background: linear-gradient(90deg, #ffffff 0%, var(--accent-2) 50%, #ffffff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: logoGlowShift 4s linear infinite;
+  transition: transform 0.3s var(--easing);
 }
-.logo .bracket { color: var(--accent-2); }
+
+.logo:hover {
+  transform: translateY(-1px) scale(1.03);
+}
+
+.logo .bracket {
+  color: var(--accent-2);
+  -webkit-text-fill-color: var(--accent-2);
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
+  animation: bracketPulse 2.5s infinite alternate ease-in-out;
+}
+
+/* Terminal Cursor Effect after Logo */
+.logo::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background-color: var(--accent-2);
+  margin-left: 5px;
+  box-shadow: 0 0 8px var(--accent-2);
+  vertical-align: middle;
+  animation: logoBlinkCursor 0.8s infinite;
+}
+
+@keyframes logoGlowShift {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes bracketPulse {
+  0% { text-shadow: 0 0 4px rgba(0, 240, 255, 0.4); }
+  100% { text-shadow: 0 0 14px rgba(0, 240, 255, 0.9), 0 0 20px rgba(0, 240, 255, 0.5); }
+}
+
+@keyframes logoBlinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
 
 .nav-links {
   display: flex;
@@ -336,7 +382,7 @@ footer a:hover img, footer a:hover svg, .social-links a:hover img, .social-links
   flex: 1;
 }
 
-/* ---------- 5. Solid Cyan Read More Button (Index & Blog Synced) ---------- */
+/* ---------- 5. Solid Cyan Read More Button ---------- */
 .card-action, .card-body .read-btn-wrapper {
   margin-top: 14px;
   padding-top: 14px;
@@ -555,4 +601,4 @@ footer a:hover img, footer a:hover svg, .social-links a:hover img, .social-links
 /* ---------- 7. Responsive Fixes ---------- */
 @media (max-width: 720px) {
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
-   }
+}
