@@ -1,5 +1,5 @@
 /* =========================================================
-   CodeWithZaid.online — Complete Modern CSS Layout
+   CodeWithZaid.online — Complete CSS (Index & Blog Synced)
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap');
@@ -191,7 +191,7 @@ h1, h2, h3, h4 {
   }
 }
 
-/* ---------- 2. STRICT FIX: GitHub & LinkedIn Icon Sizing ---------- */
+/* ---------- 2. GitHub & LinkedIn Icons Sizing (24px) ---------- */
 footer img, 
 footer svg, 
 .site-footer img, 
@@ -245,29 +245,7 @@ footer a:hover img, footer a:hover svg, .social-links a:hover img, .social-links
   100% { background-position: 200% center; }
 }
 
-.ai-badge-header {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.ai-badge-header::after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  background: var(--accent-2);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent-2);
-  animation: aiBlink 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes aiBlink {
-  0% { opacity: 0.3; transform: scale(0.8); }
-  100% { opacity: 1; transform: scale(1.2); }
-}
-
-/* ---------- 4. Layout & Cards ---------- */
+/* ---------- 4. Cards & Image Layout ---------- */
 .hero {
   padding: 160px 0 80px;
 }
@@ -300,6 +278,21 @@ footer a:hover img, footer a:hover svg, .social-links a:hover img, .social-links
   box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.4), 0 0 16px var(--accent-glow);
 }
 
+.card-img-wrapper, .card-image {
+  width: 100%;
+  height: 180px;
+  background: var(--bg-elevated-2);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-img-wrapper img, .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .card-topic-box {
   background: var(--badge-bg);
   border-bottom: 1px solid var(--badge-border);
@@ -311,7 +304,7 @@ footer a:hover img, footer a:hover svg, .social-links a:hover img, .social-links
   font-size: 0.78rem;
 }
 
-.topic-title {
+.topic-title, .card-tag {
   color: var(--accent-2);
   font-weight: 600;
   text-transform: uppercase;
@@ -320,7 +313,7 @@ footer a:hover img, footer a:hover svg, .social-links a:hover img, .social-links
   align-items: center;
   gap: 6px;
 }
-.topic-title::before {
+.topic-title::before, .card-tag::before {
   content: "✦";
   font-size: 0.85rem;
 }
@@ -343,60 +336,50 @@ footer a:hover img, footer a:hover svg, .social-links a:hover img, .social-links
   flex: 1;
 }
 
-/* ---------- 5. Smooth See More / Read More Button ---------- */
-.card-action {
+/* ---------- 5. Solid Cyan Read More Button (Index & Blog Synced) ---------- */
+.card-action, .card-body .read-btn-wrapper {
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px solid var(--border);
 }
 
-.read-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--accent-2);
-  padding: 8px 16px;
-  border-radius: 8px;
-  background: rgba(0, 240, 255, 0.08);
-  border: 1px solid rgba(0, 240, 255, 0.2);
-  transition: all 0.3s var(--easing);
-  cursor: pointer;
+.read-btn, 
+.card-body a.card-link,
+.card-action a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  background-color: #00f0ff !important;
+  color: #000000 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  padding: 10px 20px !important;
+  border-radius: 10px !important;
+  text-decoration: none !important;
+  border: none !important;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.3) !important;
+  transition: all 0.25s var(--easing) !important;
+  cursor: pointer !important;
+  width: fit-content !important;
 }
 
-.read-btn:hover {
-  background: var(--accent-2);
-  color: #000000;
-  box-shadow: 0 0 12px var(--accent-glow);
-  transform: translateY(-1px);
+.read-btn:hover, 
+.card-body a.card-link:hover,
+.card-action a:hover {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.6) !important;
+  transform: translateY(-2px) !important;
 }
 
-.read-btn:active {
-  transform: scale(0.96);
-  opacity: 0.8;
+.read-btn:active, 
+.card-body a.card-link:active {
+  transform: scale(0.96) !important;
 }
 
-/* ---------- 6. About Avatar Fix ---------- */
-.about-grid, .contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  margin-top: 20px;
-}
-
-.avatar-box img, .avatar-box .avatar-img {
-  width: 120px !important;
-  height: 120px !important;
-  object-fit: cover;
-  border-radius: 50%;
-  margin: 0 auto 16px auto;
-  border: 2px solid var(--accent-2);
-  box-shadow: 0 0 16px var(--accent-glow);
-}
-
-/* ---------- 7. Responsive Fixes ---------- */
+/* ---------- 6. Responsive Fixes ---------- */
 @media (max-width: 720px) {
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
 }
