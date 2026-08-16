@@ -2,6 +2,7 @@ import os
 import requests
 import json
 import urllib.parse
+import random
 from datetime import datetime
 from bs4 import BeautifulSoup
 
@@ -52,23 +53,31 @@ def update_blog_listing(today, title="The Future of Web Development and AI Autom
     with open(blog_page_path, "r", encoding="utf-8") as f:
         soup = BeautifulSoup(f.read(), "html.parser")
 
-    blog_grid = soup.find("div", class_="blog-grid")
+    # Target class according to updated design (card-grid or blog-grid fallback)
+    blog_grid = soup.find("div", class_="card-grid") or soup.find("div", class_="blog-grid")
     if blog_grid:
         existing_card = blog_grid.find("a", href=f"blog/{today}.html")
         if not existing_card:
             new_card = soup.new_tag("article", **{"class": "card"})
             
-            # Dynamic Image generator based on topic title
+            # Dynamic AI Image Generator based on title
             encoded_title = urllib.parse.quote(title)
-            dynamic_img_url = f"https://source.unsplash.com/featured/500x300/?{encoded_title},tech,coding"
+            random_seed = random.randint(1, 9999)
+            dynamic_img_url = f"https://image.pollinations.ai/prompt/{encoded_title}?width=600&height=350&nologo=true&seed={random_seed}"
             
             card_content = f"""
-              <div class="card-image"><img src="{dynamic_img_url}" alt="{title}"></div>
+              <div class="card-img-wrapper">
+                <img src="{dynamic_img_url}" alt="{title}">
+              </div>
+              <div class="card-topic-box">
+                <span class="topic-title">AI Automation</span>
+              </div>
               <div class="card-body">
-                <span class="card-tag">AI Automation</span>
                 <h3>{title}</h3>
                 <p>A fresh exploration into modern development workflows for 2026.</p>
-                <a href="blog/{today}.html" class="card-link">Read More →</a>
+                <div class="card-action">
+                  <a href="blog/{today}.html" class="read-btn">Read More →</a>
+                </div>
               </div>
             """
             new_card.append(BeautifulSoup(card_content, "html.parser"))
@@ -89,8 +98,7 @@ def save_html_file(content):
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Future of Web Development and AI Automation in 2026 — CodeWithZaid</title>
     <link rel="stylesheet" href="../style.css">
-             <script defer src="/_vercel/insights/script.js"></script>
-
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
     <header class="site-header">
