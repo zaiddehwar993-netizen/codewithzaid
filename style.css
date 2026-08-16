@@ -1,17 +1,16 @@
 /* =========================================================
    CodeWithZaid.online — Luxury Tech & AI Developer Stylesheet
-   Design: Glassmorphism Dark Theme, Electric Cyan Glows,
-   Poppins + Inter + JetBrains Mono Accents
+   Design: Dark Terminal Glassmorphism, Electric Cyan Glows
    ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap');
 
 :root {
   --bg: #090a0f;
-  --bg-elevated: rgba(18, 20, 29, 0.75);
+  --bg-elevated: rgba(18, 20, 29, 0.82);
   --bg-elevated-2: #161922;
   --border: rgba(255, 255, 255, 0.09);
-  --border-glow: rgba(0, 229, 255, 0.25);
+  --border-glow: rgba(0, 240, 255, 0.3);
   --text: #f0f2f8;
   --text-muted: #8e93a6;
   --accent: #2563eb;
@@ -30,10 +29,10 @@
 
 [data-theme="light"] {
   --bg: #f4f6fa;
-  --bg-elevated: rgba(255, 255, 255, 0.85);
+  --bg-elevated: rgba(255, 255, 255, 0.88);
   --bg-elevated-2: #eaedf3;
   --border: rgba(15, 23, 42, 0.08);
-  --border-glow: rgba(37, 99, 235, 0.2);
+  --border-glow: rgba(37, 99, 235, 0.25);
   --text: #0f172a;
   --text-muted: #64748b;
   --accent: #2563eb;
@@ -64,7 +63,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Luxury Background Glow Objects */
+/* Background Ambient Glow */
 body::before {
   content: "";
   position: fixed;
@@ -151,7 +150,7 @@ textarea:focus-visible {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(9, 10, 15, 0.7);
+  background: rgba(9, 10, 15, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
@@ -350,7 +349,7 @@ textarea:focus-visible {
   position: relative;
 }
 
-/* ---------- Cards (Modern Glass Look) ---------- */
+/* ---------- Cards (Uniform Luxury Look & Image Fix) ---------- */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -366,6 +365,7 @@ textarea:focus-visible {
   display: flex;
   flex-direction: column;
   transition: all var(--transition);
+  position: relative;
 }
 .card:hover {
   border-color: var(--border-glow);
@@ -373,6 +373,8 @@ textarea:focus-visible {
   box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7),
               0 0 20px var(--accent-glow);
 }
+
+/* Image section without broken text leaks */
 .card-image {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -380,9 +382,6 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
   overflow: hidden;
   position: relative;
 }
@@ -391,10 +390,12 @@ textarea:focus-visible {
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
+  color: transparent; /* Hides raw alt text breaking the card header */
 }
 .card:hover .card-image img {
   transform: scale(1.05);
 }
+
 .card-body {
   padding: 24px;
   display: flex;
@@ -409,6 +410,8 @@ textarea:focus-visible {
   color: var(--accent-2);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  display: inline-block;
+  margin-bottom: 2px;
 }
 .card-body h3 { 
   font-size: 1.2rem;
@@ -491,7 +494,7 @@ textarea:focus-visible {
 }
 .footer-social svg { width: 18px; height: 18px; }
 
-/* ---------- Page Header (Inner Pages) ---------- */
+/* ---------- Inner Pages Header ---------- */
 .page-header {
   padding: 160px 0 60px;
 }
@@ -637,7 +640,7 @@ textarea:focus-visible {
   margin-bottom: 44px;
 }
 
-/* ---------- Blog Listing (Automated AI Posts Optimized) ---------- */
+/* ---------- Blog Grid ---------- */
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -654,7 +657,7 @@ textarea:focus-visible {
   width: 60%; 
 }
 
-/* ---------- Responsive Breakpoints ---------- */
+/* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .card-grid { grid-template-columns: repeat(2, 1fr); }
   .about-grid, .contact-grid { grid-template-columns: 1fr; }
@@ -690,4 +693,4 @@ textarea:focus-visible {
   .hero { padding: 140px 0 72px; }
   .section { padding: 68px 0; }
    }
-     
+                              
