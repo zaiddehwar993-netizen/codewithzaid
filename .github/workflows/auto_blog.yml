@@ -2,7 +2,8 @@ name: Auto Blog Generator
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    # Runs once a day at 15:00 UTC = 8:00 PM Pakistan Time (PKT, UTC+5)
+    - cron: '0 15 * * *'
   workflow_dispatch:
 
 jobs:
@@ -24,7 +25,7 @@ jobs:
 
       - name: Run Script to Generate Article
         env:
-          GEMINI_API_KEY: "AIzaSyB0bTzkFYf0g6FnmMURLEgob8khEwginak"
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: python generate_blog.py
 
       - name: Commit and Push New Article
@@ -32,6 +33,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Automated unique daily blog post by AI"
+          git commit -m "Automated unique daily blog post by AI" || exit 0
           git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/zaiddehwar993-netizen/codewithzaid.git main
-          
