@@ -260,44 +260,10 @@ def save_html_file(content, title, description, category, img_prompt):
     <title>{title} — CodeWithZaid</title>
     <link rel="stylesheet" href="../style.css">
     <script defer src="/_vercel/insights/script.js"></script>
-    <style>
-        html, body {{
-            overflow-x: hidden;
-            overflow-y: auto !important;
-            height: auto !important;
-            min-height: 100vh;
-        }}
-        .blog-post-article {{
-            max-width: 820px;
-            margin: 0 auto;
-            padding: 40px 20px 80px;
-        }}
-        .blog-post-article h1 {{
-            font-size: 2.3rem;
-            line-height: 1.3;
-            margin-bottom: 28px;
-            background: linear-gradient(90deg, #ffffff 0%, #00f0ff 50%, #ffffff 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }}
-        .blog-post-article h2 {{
-            font-size: 1.55rem;
-            margin-top: 36px;
-            margin-bottom: 18px;
-            color: var(--accent-2, #00f0ff);
-            border-left: 3px solid #00f0ff;
-            padding-left: 12px;
-        }}
-        .blog-post-article p {{
-            font-size: 1.08rem;
-            line-height: 1.8;
-            margin-bottom: 24px !important;
-            color: var(--text-muted, #c3c7d5);
-        }}
-    </style>
 </head>
 <body>
+    <div class="reading-progress" id="readingProgress"></div>
+
     <header class="site-header">
       <nav class="nav wrap" aria-label="Primary">
         <a href="../index.html" class="logo"><span class="bracket">&lt;</span>CodeWithZaid<span class="bracket">/&gt;</span></a>
@@ -306,6 +272,7 @@ def save_html_file(content, title, description, category, img_prompt):
           <li><a href="../blog.html">Blog</a></li>
           <li><a href="../about.html">About</a></li>
           <li><a href="../contact.html">Contact</a></li>
+          <li><a class="nav-external-link" href="https://echoes-of-history-two.vercel.app/" target="_blank" rel="noopener">History Blog ↗</a></li>
         </ul>
       </nav>
     </header>
@@ -321,6 +288,18 @@ def save_html_file(content, title, description, category, img_prompt):
         <span class="footer-copy">&copy; 2026 CodeWithZaid.online</span>
       </div>
     </footer>
+
+    <script>
+      // Reading progress bar
+      window.addEventListener("scroll", function () {{
+        var bar = document.getElementById("readingProgress");
+        if (!bar) return;
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var pct = height > 0 ? (scrollTop / height) * 100 : 0;
+        bar.style.width = pct + "%";
+      }});
+    </script>
 </body>
 </html>
 """
