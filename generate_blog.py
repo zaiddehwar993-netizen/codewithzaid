@@ -180,6 +180,24 @@ def generate_article():
     save_used_topic(topic)
 
 
+# Reliable static fallback images (Unsplash) used ONLY if the Pollinations
+# AI-generated image fails to load — so a card is never left blank/broken.
+FALLBACK_IMAGES = {
+    "ai": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=60",
+    "data": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=60",
+    "generic": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=60",
+}
+
+
+def get_fallback_image(category):
+    cat = category.lower()
+    if any(k in cat for k in ["ai", "security", "machine", "ml"]):
+        return FALLBACK_IMAGES["ai"]
+    if any(k in cat for k in ["scraping", "database", "api"]):
+        return FALLBACK_IMAGES["data"]
+    return FALLBACK_IMAGES["generic"]
+
+
 def update_blog_listing(today, title, description, category, img_prompt):
     blog_page_path = str(BASE_DIR / "blog.html")
     if not os.path.exists(blog_page_path):
@@ -204,10 +222,11 @@ def update_blog_listing(today, title, description, category, img_prompt):
         prompt_encoded = urllib.parse.quote(img_prompt)
         random_seed = random.randint(1, 9999)
         dynamic_img_url = f"https://image.pollinations.ai/prompt/{prompt_encoded}?width=600&height=350&nologo=true&seed={random_seed}"
+        fallback_img_url = get_fallback_image(category)
 
         card_content = f"""
           <div class="card-img-wrapper">
-            <img src="{dynamic_img_url}" alt="{title}">
+            <img src="{dynamic_img_url}" alt="{title}" loading="lazy" onerror="this.onerror=null;this.src='{fallback_img_url}';">
           </div>
           <div class="card-topic-box">
             <span class="topic-title">{category}</span>
