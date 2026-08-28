@@ -190,34 +190,41 @@ def update_blog_listing(today, title, description, category, img_prompt):
 
     blog_grid = soup.find("div", class_="card-grid") or soup.find("div", class_="blog-grid")
     if blog_grid:
-        existing_card = blog_grid.find("a", href=f"blog/{today}.html")
-        if not existing_card:
-            new_card = soup.new_tag("article", **{"class": "card"})
+        # If a card for today already exists (e.g. a manual re-run), remove the
+        # OLD one first so it gets replaced with fresh title/description/image
+        # instead of being silently skipped.
+        existing_link = blog_grid.find("a", href=f"blog/{today}.html")
+        if existing_link:
+            existing_article = existing_link.find_parent("article", class_="card")
+            if existing_article:
+                existing_article.decompose()
 
-            prompt_encoded = urllib.parse.quote(img_prompt)
-            random_seed = random.randint(1, 9999)
-            dynamic_img_url = f"https://image.pollinations.ai/prompt/{prompt_encoded}?width=600&height=350&nologo=true&seed={random_seed}"
+        new_card = soup.new_tag("article", **{"class": "card"})
 
-            card_content = f"""
-              <div class="card-img-wrapper">
-                <img src="{dynamic_img_url}" alt="{title}">
-              </div>
-              <div class="card-topic-box">
-                <span class="topic-title">{category}</span>
-              </div>
-              <div class="card-body">
-                <h3>{title}</h3>
-                <p>{description}</p>
-                <div class="card-action">
-                  <a href="blog/{today}.html" class="read-btn">Read More →</a>
-                </div>
-              </div>
-            """
-            new_card.append(BeautifulSoup(card_content, "html.parser"))
-            blog_grid.insert(0, new_card)
+        prompt_encoded = urllib.parse.quote(img_prompt)
+        random_seed = random.randint(1, 9999)
+        dynamic_img_url = f"https://image.pollinations.ai/prompt/{prompt_encoded}?width=600&height=350&nologo=true&seed={random_seed}"
 
-            with open(blog_page_path, "w", encoding="utf-8") as f:
-                f.write(str(soup))
+        card_content = f"""
+          <div class="card-img-wrapper">
+            <img src="{dynamic_img_url}" alt="{title}">
+          </div>
+          <div class="card-topic-box">
+            <span class="topic-title">{category}</span>
+          </div>
+          <div class="card-body">
+            <h3>{title}</h3>
+            <p>{description}</p>
+            <div class="card-action">
+              <a href="blog/{today}.html" class="read-btn">Read More →</a>
+            </div>
+          </div>
+        """
+        new_card.append(BeautifulSoup(card_content, "html.parser"))
+        blog_grid.insert(0, new_card)
+
+        with open(blog_page_path, "w", encoding="utf-8") as f:
+            f.write(str(soup))
 
 
 def save_html_file(content, title, description, category, img_prompt):
